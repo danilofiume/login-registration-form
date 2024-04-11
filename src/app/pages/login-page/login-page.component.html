@@ -1,0 +1,39 @@
+<div class="row mt-4 mb-4">
+   <div class=" offset-md-3 col-md-6">
+    <div class="card p-3">
+
+        <!-- per collegare agg al form formGroup e mettere come valore l'istanza creata nel ts -->
+        <!-- per collegare il sumbit sempre con ngSumbit -->
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+            <div class="mb-3">
+            <label for="email" class="form-label">Email </label>
+            <!-- usare formControlNme per collegare al form con nome nel ts -->
+
+            <!-- metodo base per mettere gli if con le classi -->
+            <input type="email" class="form-control" id="email" formControlName="email" [ngClass]="{
+                'is-invalid' : loginForm.controls.email.touched && loginForm.controls.email.invalid
+            }">
+
+            @if (loginForm.controls.email.touched && loginForm.controls.email.errors?.required) {<div id="emailHelp" class="form-text">Email is required</div>}
+            @if (loginForm.controls.email.touched && loginForm.controls.email.errors?.pattern) {<div id="emailHelp" class="form-text">Email is invalid</div>}
+            
+
+            </div>
+            <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+
+            <!-- questo e un modo che ci permette di usare reactiveform con il metodo get per evitare il control -->
+            <input type="password" class="form-control" id="password" formControlName="password" [ngClass]="{'is-invalid': loginForm.get('password').touched && loginForm.get('password').invalid }">
+
+            @if (loginForm.get('password').touched && loginForm.get('password').errors?.required) {<div id="emailHelp" class="form-text">Pasword is required</div>}
+            
+            </div>
+            
+            <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button>
+<!-- andiamo a gestire il disabled in base al valid perche non e valida -->
+
+        </form>
+    </div>
+   </div>
+</div>
+   
